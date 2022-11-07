@@ -1,0 +1,42 @@
+<script>
+            const plid=new Map([["A",10],["B",11],["C",12],["D",13],["E",14],["F",15],["G",16],["H",17],["J",18],["K",19],["L",20],["M",21],["N",22],["P",23],["Q",24],["R",25],["S",26],["T",27],["U",28],["V",29],["W",30],["X",31],["Y",32],["Z",33],["I",34],["O",35]]);
+            function checkf()
+            {
+                var pidin=document.getElementById("pid").value.toUpperCase();
+                var pidA=pidin.split('');
+                var pidAlen=pidA.length;
+                var plcpi=plid.get(pidA[0]);
+                if(pidAlen<10)
+                {
+                    alert("長度錯誤，請輸入正確的身分證字號，格式為第一碼英文+9碼數字");
+                }
+                else if(plcpi===undefined)
+                {
+                    alert("第一碼錯誤，請輸入正確的身分證字號，第一碼須為英文");
+                }
+                else
+                {
+                    check();
+                }
+            }
+            function check()
+            {
+                var perc=new Array(1,9,8,7,6,5,4,3,2,1,1);                               
+                var pidin=document.getElementById("pid").value.toUpperCase();  
+                var pidA=pidin.split('');                                     
+                var e2n=plid.get(pidA[0]).toString().split('');                    
+                var pidB=e2n.concat(pidA[1],pidA[2],pidA[3],pidA[4],pidA[5],pidA[6],pidA[7],pidA[8],pidA[9]);                                                             
+                var count=0;                                                  
+                for(var i=0;i<11;i++)                                         
+                {
+                    count+=perc[i]*pidB[i];
+                }
+                if(count%10===0)                                                
+                {
+                    alert("此身分證字號正確");
+                }else
+                {
+                    alert("此身分證字號錯誤");
+                }
+            }
+        </script>
