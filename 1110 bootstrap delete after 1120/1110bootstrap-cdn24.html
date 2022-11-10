@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+
+-->
+<html>
+    <head>
+        <title>BootStrap</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+        <style>
+            [class *="col"]{
+                border: 1px black solid;
+                background-color: lightcyan;
+            }
+            .row{
+                background-color: gray;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>container容器 文字大小寫</h1>
+        <div class="container">
+            <p class="text-lowercase">ALIGN = " NORTH " 轉為小寫</p>
+            <p class="text-upperercase">align =" north "轉為大寫</p>
+            <p class="text-capitalize">align =" north "轉為字首大寫</p>
+        </div>
+        <h1>container容器 文字樣式</h1>
+        <div class="container">
+            <p class="fw-bold">align =" north " 粗體</p>
+            <p class="fw-bolder">align =" north " 粗體(相對於父元素</p>
+            <p class="fw-normal">align =" north " 一般粗</p>
+            <p class="fw-light">align =" north " 細體</p>
+            <p class="fw-lighter">align =" north " 細體(相對於父元素</p>
+            <p class="fst-italic ">align =" north " 斜體</p>
+            <p class="fst-normal-light">align =" north " 正常文字(無任何樣式</p>
+        </div>
+    </body>
+</html>
