@@ -41,14 +41,15 @@
             {
                 var tempC=document.getElementById("temp0").value;
                 var tempF=document.getElementById("temp1").value;
+                var tempK=document.getElementById("temp2").value;
                 setTimeout(function(){
-                if(tempC<-273.16 || tempF<-459.68)
+                if(tempC<-273.16 || tempF<-459.68 || tempK<0)
                 {
                     alert('超過絕對零度');
                     for(var i=0;i<=2;i++)
                     {document.getElementById("temp"+i).value="";}
                 }else
-                {tempCc(x);}},500);
+                {tempCc(x);}},800);
             }
             function tempCc(x)
             {   
