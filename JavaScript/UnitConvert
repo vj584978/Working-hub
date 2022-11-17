@@ -8,6 +8,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
+            #align{
+                display: flex;
+                justify-content: center;
+            }
             #t{
                 background-color: lightskyblue;
                 border-radius: 15px;
@@ -46,7 +50,7 @@
                 }else
                 {tempCc(x);}},500);
             }
-            function tempCc(x) //微暴力寫法
+            function tempCc(x)
             {   
                 var tempin = document.getElementsByName('temp');
                 var tempA=[tempin[0].value,tempin[1].value,tempin[2].value];
@@ -66,17 +70,44 @@
                     document.getElementById("temp"+i).value=(Math.floor(tempOut[i]*100)/100);
                 }
             }
-            function weigthC()
+            function weigthC(g)
             {
-
+                var weiUnit=[1,(1/1000),(1/600),(1/28.349),(1/453.592)];
+                var weiIn=[];
+                for(var i=0;i<5;i++)
+                {
+                    weiIn[i]=document.getElementById("weg"+i).value;
+                }
+                var weiBase=weiIn[g]/weiUnit[g];
+                var weiOut=[];
+                for(var t=0;t<5;t++)
+                {
+                    weiOut[t]=(Math.floor(weiBase*weiUnit[t]*100000))/100000;
+                }
+                for(var u=0;u<5;u++)
+                {
+                    document.getElementById("weg"+u).value=weiOut[u];
+                }
+                console.log(weiIn,weiOut,weiBase);
             }
-            function lengthCC()
+            function lengthC(u)
             {
-               
+                var cmin=document.getElementsByName("length").item(u).value;
+                var cmUnit=[1,(100),(30.48),(2.54),(91.44)];
+                var cmBase=cmin*cmUnit[u];
+                for(var i=0;i<5;i++)
+                {
+                    if(i===u)
+                    {continue;}
+                    else
+                    {document.getElementById("len"+i).value=(Math.floor(cmBase/cmUnit[i]*10000))/10000;}
+                }
             }
         </script>
     </head>
-    <body>        
+    <body>
+        <div id="align">
+        <div>
         <form>
             <fieldset id="t">
                 <legend>溫度轉換</legend>
@@ -91,11 +122,11 @@
             <fieldset id="w">
                 <legend>重量單位轉換(未完)</legend>
                 <span>1g=0.001kg=0.00167台斤=0.03527oz=0.0022lb</span><br>
-                <label>公克(g)：</label><input type="number" name="weigth" min="0" id="weg0" placeholder="請輸入公克" oninput="weigthC()"><br>
-                <label>公斤(kg)：</label><input type="number" name="weigth" min="0" id="weg1" placeholder="請輸入公斤" oninput="weigthC()"><br>
-                <label>台斤：</label><input type="number" name="weigth" min="0" id="weg2" placeholder="請輸入臺斤" oninput="weigthC()"><br>
-                <label>盎司(oz)：</label><input type="number" name="weigth" min="0" id="weg3" placeholder="請輸入盎司" oninput="weigthC()"><br>
-                <label>磅(lb)：</label><input type="number" name="weigth" min="0" id="weg4" placeholder="請輸入磅" oninput="weigthC()"><br>
+                <label>公克(g)：</label><input type="number" name="weigth" min="0" id="weg0" placeholder="請輸入公克" oninput="weigthC(0)"><br>
+                <label>公斤(kg)：</label><input type="number" name="weigth" min="0" id="weg1" placeholder="請輸入公斤" oninput="weigthC(1)"><br>
+                <label>台斤：</label><input type="number" name="weigth" min="0" id="weg2" placeholder="請輸入臺斤" oninput="weigthC(2)"><br>
+                <label>盎司(oz)：</label><input type="number" name="weigth" min="0" id="weg3" placeholder="請輸入盎司" oninput="weigthC(3)"><br>
+                <label>磅(lb)：</label><input type="number" name="weigth" min="0" id="weg4" placeholder="請輸入磅" oninput="weigthC(4)"><br>
                 <input type="reset" value="清除">
             </fieldset>
         </form>
@@ -103,13 +134,15 @@
             <fieldset id="l">
                 <legend>長度單位轉換(未完)</legend>
                 <span>1cm=0.01m=0.0328084ft=0.3937008in=0.0109361yd</span><br>
-                <label>公分(cm)：</label><input type="number" name="length" min="0" id="len0" placeholder="請輸入公分" oninput="lengthC()"><br>
-                <label>公尺(m)：</label><input type="number" name="length" min="0" id="len1" placeholder="請輸入公尺" oninput="lengthC()"><br>
-                <label>英尺(ft)：</label><input type="number" name="length" min="0" id="len2" placeholder="請輸入英尺" oninput="lengthC()"><br>
-                <label>英吋(in)：</label><input type="number" name="length" min="0" id="len3" placeholder="請輸入英吋" oninput="lengthC()"><br>
-                <label>碼(yd)：</label><input type="number" name="length" min="0" id="len4" placeholder="請輸入碼" oninput="lengthC()"><br>
+                <label>公分(cm)：</label><input type="number" name="length" min="0" id="len0" placeholder="請輸入公分" oninput="lengthC(0)"><br>
+                <label>公尺(m)：</label><input type="number" name="length" min="0" id="len1" placeholder="請輸入公尺" oninput="lengthC(1)"><br>
+                <label>英尺(ft)：</label><input type="number" name="length" min="0" id="len2" placeholder="請輸入英尺" oninput="lengthC(2)"><br>
+                <label>英吋(in)：</label><input type="number" name="length" min="0" id="len3" placeholder="請輸入英吋" oninput="lengthC(3)"><br>
+                <label>碼(yd)：</label><input type="number" name="length" min="0" id="len4" placeholder="請輸入碼" oninput="lengthC(4)"><br>
                 <input type="reset" value="清除">
             </fieldset>
         </form>
+        </div>
+        </div>
     </body>
 </html>
