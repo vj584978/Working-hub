@@ -121,7 +121,7 @@
         </form>
         <form>
             <fieldset id="w">
-                <legend>重量單位轉換(未完)</legend>
+                <legend>重量單位轉換</legend>
                 <span>1g=0.001kg=0.00167台斤=0.03527oz=0.0022lb</span><br>
                 <label>公克(g)：</label><input type="number" name="weigth" min="0" id="weg0" placeholder="請輸入公克" oninput="weigthC(0)"><br>
                 <label>公斤(kg)：</label><input type="number" name="weigth" min="0" id="weg1" placeholder="請輸入公斤" oninput="weigthC(1)"><br>
@@ -133,7 +133,7 @@
         </form>
         <form>
             <fieldset id="l">
-                <legend>長度單位轉換(未完)</legend>
+                <legend>長度單位轉換</legend>
                 <span>1cm=0.01m=0.0328084ft=0.3937008in=0.0109361yd</span><br>
                 <label>公分(cm)：</label><input type="number" name="length" min="0" id="len0" placeholder="請輸入公分" oninput="lengthC(0)"><br>
                 <label>公尺(m)：</label><input type="number" name="length" min="0" id="len1" placeholder="請輸入公尺" oninput="lengthC(1)"><br>
