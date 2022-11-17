@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<!--
+
+-->
+<html>
+    <head>
+        <title>單位換算器</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            #t{
+                background-color: lightskyblue;
+                border-radius: 15px;
+            }
+            #w{
+                background-color: lightcyan;
+                border-radius: 15px;
+            }
+            #l{
+                background-color: lightgreen;
+                border-radius: 15px;
+            }
+            legend{
+                background-color: wheat;
+                border-radius: 15px;
+            }
+            form{
+                width: 380px;
+                margin: 10px;
+            }
+            form input{
+                float: right;
+            }
+        </style>
+        <script>
+            function tempCk(x)
+            {
+                var tempC=document.getElementById("temp0").value;
+                var tempF=document.getElementById("temp1").value;
+                if(tempC<-273.16 || tempF<-459.68)
+                {
+                    alert('超過絕對零度');
+                    for(var i=0;i<=2;i++)
+                    {
+                        document.getElementById("temp"+i).value="";
+                    }
+                }else
+                {
+                    tempCc(x);
+                }
+            }
+            function tempCc(x) //微暴力寫法
+            {   
+                var tempin = document.getElementsByName('temp');
+                var tempA=[tempin[0].value,tempin[1].value,tempin[2].value];
+                var tempOut=[];
+                if(x===0)
+                {
+                    tempOut=[tempA[x],tempA[x]*1.8+32,Number(tempA[x])+273.15];
+                }else if(x===1)
+                {
+                    tempOut=[(Number(tempA[x])-32)/1.8,tempA[x],(Number(tempA[x])-32)/1.8+273.15];
+                }else
+                {
+                    tempOut=[Number(tempA[x])-273.15,(Number(tempA[x])-273.15)*1.8+32,tempA[x]];
+                }
+                for(var i=0;i<=2;i++)
+                {
+                    document.getElementById("temp"+i).value=(Math.floor(tempOut[i]*100)/100);
+                }
+            }
+            function weigthC()
+            {
+
+            }
+            function lengthCC()
+            {
+               
+            }
+        </script>
+    </head>
+    <body>        
+        <form>
+            <fieldset id="t">
+                <legend>溫度轉換</legend>
+                <span>絕對零度：-273.15 °C = -459.67 °F = 0 K</span><br>
+                <label>攝氏溫度(°C)：</label><input type="text" name="temp" id="temp0" placeholder="請輸入溫度" oninput="tempCk(0)"><br>
+                <label>華氏溫度(°F)：</label><input type="text" name="temp" id="temp1" placeholder="請輸入溫度" oninput="tempCk(1)"><br>
+                <label>凱(克)氏溫度(K)：</label><input type="number" min="0" name="temp" id="temp2" placeholder="請輸入溫度" oninput="tempCk(2)"><br>
+                <input type="reset" value="清除">
+            </fieldset>
+        </form>
+        <form>
+            <fieldset id="w">
+                <legend>重量單位轉換(未完)</legend>
+                <span>1g=0.001kg=0.00167台斤=0.03527oz=0.0022lb</span><br>
+                <label>公克(g)：</label><input type="number" name="weigth" min="0" id="weg0" placeholder="請輸入公克" oninput="weigthC()"><br>
+                <label>公斤(kg)：</label><input type="number" name="weigth" min="0" id="weg1" placeholder="請輸入公斤" oninput="weigthC()"><br>
+                <label>台斤：</label><input type="number" name="weigth" min="0" id="weg2" placeholder="請輸入臺斤" oninput="weigthC()"><br>
+                <label>盎司(oz)：</label><input type="number" name="weigth" min="0" id="weg3" placeholder="請輸入盎司" oninput="weigthC()"><br>
+                <label>磅(lb)：</label><input type="number" name="weigth" min="0" id="weg4" placeholder="請輸入磅" oninput="weigthC()"><br>
+                <input type="reset" value="清除">
+            </fieldset>
+        </form>
+        <form>
+            <fieldset id="l">
+                <legend>長度單位轉換(未完)</legend>
+                <span>1cm=0.01m=0.0328084ft=0.3937008in=0.0109361yd</span><br>
+                <label>公分(cm)：</label><input type="number" name="length" min="0" id="len0" placeholder="請輸入公分" oninput="lengthC()"><br>
+                <label>公尺(m)：</label><input type="number" name="length" min="0" id="len1" placeholder="請輸入公尺" oninput="lengthC()"><br>
+                <label>英尺(ft)：</label><input type="number" name="length" min="0" id="len2" placeholder="請輸入英尺" oninput="lengthC()"><br>
+                <label>英吋(in)：</label><input type="number" name="length" min="0" id="len3" placeholder="請輸入英吋" oninput="lengthC()"><br>
+                <label>碼(yd)：</label><input type="number" name="length" min="0" id="len4" placeholder="請輸入碼" oninput="lengthC()"><br>
+                <input type="reset" value="清除">
+            </fieldset>
+        </form>
+    </body>
+</html>
