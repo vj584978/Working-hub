@@ -37,7 +37,14 @@
             {
                 var tempC=document.getElementById("temp0").value;
                 var tempF=document.getElementById("temp1").value;
-                if(tempC<-273.16 || tempF<-459.68)
+                if(isNaN(tempC) || isNaN(tempF))
+                {
+                    alert("請輸入數字");
+                    for(var i=0;i<=2;i++)
+                    {
+                        document.getElementById("temp"+i).value="";
+                    }
+                }else if(tempC<-273.16 || tempF<-459.68)
                 {
                     alert('超過絕對零度');
                     for(var i=0;i<=2;i++)
