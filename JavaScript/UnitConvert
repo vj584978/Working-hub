@@ -37,24 +37,14 @@
             {
                 var tempC=document.getElementById("temp0").value;
                 var tempF=document.getElementById("temp1").value;
-                if(isNaN(tempC) || isNaN(tempF))
-                {
-                    alert("請輸入數字");
-                    for(var i=0;i<=2;i++)
-                    {
-                        document.getElementById("temp"+i).value="";
-                    }
-                }else if(tempC<-273.16 || tempF<-459.68)
+                setTimeout(function(){
+                if(tempC<-273.16 || tempF<-459.68)
                 {
                     alert('超過絕對零度');
                     for(var i=0;i<=2;i++)
-                    {
-                        document.getElementById("temp"+i).value="";
-                    }
+                    {document.getElementById("temp"+i).value="";}
                 }else
-                {
-                    tempCc(x);
-                }
+                {tempCc(x);}},500);
             }
             function tempCc(x) //微暴力寫法
             {   
