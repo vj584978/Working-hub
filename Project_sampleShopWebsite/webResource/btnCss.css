@@ -1,0 +1,11 @@
+.btnOut{
+    display: flex;
+}
+.btn{
+    width: 100%;
+    text-align: center;
+}
+.btn input{
+    width: 50%;
+    text-align: center;
+}
