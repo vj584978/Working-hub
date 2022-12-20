@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            *{
+                box-sizing: border-box;
+            }
+            #out{
+                background-color: rgb(13,27,42);
+                width: 290px;
+                padding: 5px;
+                border: 1px black solid;
+                text-align: center;
+            }
+            #show{
+                background-color: rgb(119,141,169);
+                width: 270px;
+                height: 100px;
+                border-radius: 10px;
+                margin-bottom: 5px;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+            .btn{
+                width: 1.5cm;
+                height: 1.5cm;
+                border-radius: 50%;
+                background-color: rgb(27,38,59);
+                color: rgb(224,225,221);
+                font-weight: bolder;
+                font-size: 20px;
+                margin: 0.1cm;
+                cursor: pointer;
+                border: none;
+            }
+            .btn2{
+                width: 3.3cm;
+                height: 1.5cm;
+                border-radius: 0.75cm;
+                background-color: rgb(27,38,59);
+                color: rgb(224,225,221);
+                font-weight: bolder;
+                font-size: 20px;
+                margin: 0.1cm;
+                cursor: pointer;
+                border: none;
+            }
+            .btno{
+                width: 1.5cm;
+                height: 1.5cm;
+                border-radius: 50%;
+                background-color: rgb(69,90,119);
+                color: rgb(224,225,221);
+                font-weight: bolder;
+                font-size: 20px;
+                margin: 0.1cm;
+                cursor: pointer;
+                border: none;
+            }
+        </style>
+        <script>
+            const inl=document.getElementById("inl");
+            const in2=document.getElementById("in2");
+            const in3=document.getElementById("in3");
+            const in4=document.getElementById("in4");
+            const in5=document.getElementById("in5");
+            const in6=document.getElementById("in6");
+            const in7=document.getElementById("in7");
+            const in8=document.getElementById("in8");
+            const in9=document.getElementById("in9");
+            const in0=document.getElementById("in0");
+            
+            const indot=document.getElementById("indot");
+            
+            const out=document.getElementById("show").value;
+            
+            function input()
+            {
+                out=inl;
+            }
+        </script>
+    </head>
+    <body>
+        <div id="out">
+        <input id="show" disabled>
+        <br>
+        <input type="button" id="ine" class="btno" value=" ">
+        <input type="button" id="inc" class="btno" value="C">
+        <input type="button" id="inb" class="btno" value="|←">
+        <input type="button" id="inmp" class="btno" value="+" onclick="input()">
+        <br>
+        <input type="button" id="in1" class="btn" value="1">
+        <input type="button" id="in2" class="btn" value="2">
+        <input type="button" id="in3" class="btn" value="3">
+        <input type="button" id="inmn" class="btno" value="-">
+        <br>
+        <input type="button" id="in4" class="btn" value="4">
+        <input type="button" id="in5" class="btn" value="5">
+        <input type="button" id="in6" class="btn" value="6">
+        <input type="button" id="inmt" class="btno" value="*">
+        <br>
+        <input type="button" id="in7" class="btn" value="7">
+        <input type="button" id="in8" class="btn" value="8">
+        <input type="button" id="in9" class="btn" value="9">
+        <input type="button" id="indv" class="btno" value="/">
+        <br>
+        <input type="button" id="in0" class="btn2" value="0">
+        <input type="button" id="indot" class="btn" value=".">
+        <input type="button" id="inans" class="btno" value="=">
+        
+        </div>
+    </body>
+</html>
