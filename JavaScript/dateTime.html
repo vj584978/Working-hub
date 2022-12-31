@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            *{
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+            body{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+            }
+            .outbox{
+                position: relative;
+                background: black;
+                width: 750px;
+                height: 300px;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            .outbox::before{
+                content: '';
+                position: absolute;
+                top: -160%;
+                left: -45%;
+                width: 700px;
+                height: 600px;
+                background: linear-gradient(0deg,transparent,#45f3ff,#45f3ff);
+                transform-origin: bottom right;
+                animation: animate 6s linear infinite;
+            }
+            .outbox::after{
+                content: '';
+                position: absolute;
+                top: -160%;
+                left: -45%;
+                width: 700px;
+                height: 600px;
+                background: linear-gradient(0deg,transparent,#45f3ff,#45f3ff);
+                transform-origin: bottom right;
+                animation: animate 6s linear infinite;
+                animation-delay: -3s;
+            }
+            @keyframes animate
+            {
+                0%{transform: rotate(0deg);}
+                100%{transform: rotate(360deg);}
+            }
+            .inbox{
+                position: absolute;
+                inset: 8px;
+                border-radius: 10px;
+                background:white;
+                z-index: 10;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+            }
+            .timebox{
+                width: 50%;
+            }
+            .datebox{
+                width: 50%;
+            }
+            #time{
+                padding: 0;
+                margin: 0;
+                font-size: 90px;
+            }
+            #sec{
+                font-size: 30px;
+            }
+            #fulldate,#week,.dateSplit{
+                font-size: 40px;
+            }
+            #controlPart{
+                position: absolute;
+                top: 90%;
+            }
+        </style>
+        <script>
+            function theme()
+            {
+                var themeColor=document.getElementById('theme').value;
+                if(themeColor==="dark")
+                {
+                    document.getElementById('body').style.background='#23242a';
+                    document.getElementById('outbox').style.background="white";
+                    document.getElementById('inbox').style.background='#28292d';
+                    document.getElementById('time').style.color="white";
+                    document.getElementById('sec').style.color="white";
+                    document.getElementById('fulldate').style.color="white";
+                    document.getElementById('week').style.color="white";
+                }
+                else
+                {
+                    document.getElementById('body').style.background='white';
+                    document.getElementById('outbox').style.background="black";
+                    document.getElementById('inbox').style.background='white';
+                    document.getElementById('time').style.color="black";
+                    document.getElementById('sec').style.color="black";
+                    document.getElementById('fulldate').style.color="black";
+                    document.getElementById('week').style.color="black";
+                }
+            }
+            function time()
+            {
+                const weeknum=[0,1,2,3,4,5,6];
+                const weekStringCht=['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+                 const weekStringEng=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+                setInterval(function(){
+                const time=new Date();
+                var hour=time.getHours();
+                var min=time.getMinutes();
+                var sec=time.getSeconds();
+                document.getElementById('time').innerHTML=hour+"："+min;
+                document.getElementById('sec').innerHTML=sec;
+                var year=time.getFullYear();
+                var mouth=time.getMonth()+1;
+                var date=time.getDate();
+                var week=time.getDay();
+                var weekFormat=document.getElementById('weekformat').value;
+                var weekout="";
+                for(var i=0;i<7;i++)
+                {
+                    if(weekFormat==="Cht")
+                    {
+                        if(week===weeknum[i])
+                        {weekout=weekStringCht[i];}
+                    }
+                    else
+                        {
+                        if(week===weeknum[i])
+                        {weekout=weekStringEng[i];}
+                    }
+                }
+                document.getElementById('fulldate').innerHTML=year+"/"+mouth+"/"+date;
+                document.getElementById('week').innerHTML=weekout;
+                },1000);
+                
+            }
+        </script>
+    </head>
+    <body id="body" onload="time()">
+        <div id='outbox' class='outbox'>
+            <div id='inbox' class='inbox'>
+                <div class="datetime">
+                    <div id='timebox' class='timebox'>
+                        <span id='time'></span>
+                        <span></span>
+                        <span id='sec'></span>
+                        <br/>
+                        <span id='fulldate'></span>
+                        <span></span>
+                        <span id='week'></span>
+                    </div>
+                    <div id='datebox' class='datebox'>
+
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <div id='controlPart'>
+                    <select id='theme' onchange="theme()">
+                        <option value='light'>白天模式</option>
+                        <option value='dark'>夜間模式</option>
+                    </select>
+                    <select id='weekformat'>
+                        <option value='Cht' selected disabled>-設定星期格式-</option>
+                        <option value='Cht'>中文</option>
+                        <option value='Eng'>英文</option>
+                    </select>
+                </div>
+            </div>            
+        </div>
+    </body>
+</html>
