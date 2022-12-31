@@ -35,18 +35,6 @@
                 transform-origin: bottom right;
                 animation: animate 6s linear infinite;
             }
-            .outbox::after{
-                content: '';
-                position: absolute;
-                top: -160%;
-                left: -45%;
-                width: 700px;
-                height: 600px;
-                background: linear-gradient(0deg,transparent,#45f3ff,#45f3ff);
-                transform-origin: bottom right;
-                animation: animate 6s linear infinite;
-                animation-delay: -3s;
-            }
             @keyframes animate
             {
                 0%{transform: rotate(0deg);}
@@ -62,11 +50,8 @@
                 display: flex;
                 flex-direction: column;
             }
-            .timebox{
-                width: 50%;
-            }
-            .datebox{
-                width: 50%;
+            .timebox,.datebox{
+                width: 530px;
             }
             #time{
                 padding: 0;
@@ -165,7 +150,7 @@
                         <span id='week'></span>
                     </div>
                     <div id='datebox' class='datebox'>
-
+                        
                     </div>
                 </div>
                 <br/>
