@@ -10,6 +10,7 @@
                 margin: 0;
                 box-sizing: border-box;
             }
+
             body{
                 display: flex;
                 justify-content: center;
@@ -27,18 +28,34 @@
             .outbox::before{
                 content: '';
                 position: absolute;
-                top: -160%;
-                left: -45%;
-                width: 700px;
-                height: 600px;
-                background: linear-gradient(0deg,transparent,#45f3ff,#45f3ff);
+                top: -8%;
+                left: -28%;
+                width: 150px;
+                height: 350px;
+                background: linear-gradient(90deg,transparent,#45f3ff,#45f3ff);
                 transform-origin: bottom right;
-                animation: animate 6s linear infinite;
+                animation: animate 3s linear infinite;
+            }
+            .outbox::after{
+                content: '';
+                position: absolute;
+                top: -8%;
+                left: 109%;
+                width: 150px;
+                height: 350px;
+                background: linear-gradient(270deg,transparent,#45f3ff,#45f3ff);
+                transform-origin: bottom right;
+                animation: animate2 3s linear infinite;
             }
             @keyframes animate
             {
-                0%{transform: rotate(0deg);}
-                100%{transform: rotate(360deg);}
+                0%{left: -28%;}
+                100%{left: 109%;}
+            }
+            @keyframes animate2
+            {
+                0%{left: 109%;}
+                100%{left: -28%;}
             }
             .inbox{
                 position: absolute;
@@ -49,24 +66,43 @@
                 padding: 20px;
                 display: flex;
                 flex-direction: column;
+                overflow: hidden;
             }
-            .timebox,.datebox{
-                width: 530px;
+            .datetime{
+                display: flex;
+            }
+            .timebox{
+                width: 600px;
+            }
+            .datebox{
+                display: flex;
+                justify-content: center;
+                width: 400px;
+            }
+            .datebox td{
+                border: 1px #000 double;
+                width: 14.285%;
             }
             #time{
-                padding: 0;
-                margin: 0;
                 font-size: 90px;
+                text-shadow:black 0px 0px 10px;
             }
             #sec{
                 font-size: 30px;
+                text-shadow:black 0px 0px 10px;
             }
-            #fulldate,#week,.dateSplit{
-                font-size: 40px;
+            #fulldate{
+                font-size: 35px;
+                text-shadow:black 0px 0px 10px;
             }
             #controlPart{
-                position: absolute;
-                top: 90%;
+                
+            }
+            select{
+                background: white;
+                color: black;
+                width: 130px;
+                height: 30px;
             }
         </style>
         <script>
@@ -81,7 +117,16 @@
                     document.getElementById('time').style.color="white";
                     document.getElementById('sec').style.color="white";
                     document.getElementById('fulldate').style.color="white";
-                    document.getElementById('week').style.color="white";
+                    document.getElementById('time').style.textShadow="#45f3ff 0px 0px 15px";
+                    document.getElementById('sec').style.textShadow="#45f3ff 0px 0px 15px";
+                    document.getElementById('fulldate').style.textShadow="#45f3ff 0px 0px 15px";
+                    document.getElementById('datebox').style.background="rgba(255,255,255,0.5)";
+                    var qS=document.querySelectorAll('select');
+                    for(var i=0;i<qS.length;i++)
+                    {
+                        qS[i].style.background="#23242a";
+                        qS[i].style.color="white";
+                    }
                 }
                 else
                 {
@@ -91,17 +136,44 @@
                     document.getElementById('time').style.color="black";
                     document.getElementById('sec').style.color="black";
                     document.getElementById('fulldate').style.color="black";
-                    document.getElementById('week').style.color="black";
+                    document.getElementById('time').style.textShadow="black 0px 0px 15px";
+                    document.getElementById('sec').style.textShadow="black 0px 0px 15px";
+                    document.getElementById('fulldate').style.textShadow="black 0px 0px 15px";
+                    var qS=document.querySelectorAll('select');
+                    for(var i=0;i<qS.length;i++)
+                    {
+                        qS[i].style.background="white";
+                        qS[i].style.color="black";
+                    }
+                }
+            }
+            function formatChange()
+            {
+                const dayCht=['日','一','二','三','四','五','六'];
+                const dayEng=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+                var dayFormat=document.getElementById('dayformat').value;
+                switch(dayFormat)
+                {
+                    case "Cht":
+                        for(var i=0;i<7;i++)
+                        {document.getElementById('dayTitle'+(i+1)).innerHTML=dayCht[i];}
+                            break;
+                    case "Eng":
+                        for(var i=0;i<7;i++)
+                        {document.getElementById('dayTitle'+(i+1)).innerHTML=dayEng[i];}
+                            break;
                 }
             }
             function time()
             {
-                const weeknum=[0,1,2,3,4,5,6];
-                const weekStringCht=['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
-                 const weekStringEng=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+                const daynum=[0,1,2,3,4,5,6];
+                const dayStringCht=['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+                const dayStringEng=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
                 setInterval(function(){
                 const time=new Date();
                 var hour=time.getHours();
+                if(hour<10)
+                {hour="0"+hour;}
                 var min=time.getMinutes();
                 if(min<10)
                 {min="0"+min;}
@@ -113,24 +185,20 @@
                 var year=time.getFullYear();
                 var mouth=time.getMonth()+1;
                 var date=time.getDate();
-                var week=time.getDay();
-                var weekFormat=document.getElementById('weekformat').value;
-                var weekout="";
+                var day=time.getDay();
                 for(var i=0;i<7;i++)
                 {
-                    if(weekFormat==="Cht")
-                    {
-                        if(week===weeknum[i])
-                        {weekout=weekStringCht[i];}
-                    }
-                    else
-                        {
-                        if(week===weeknum[i])
-                        {weekout=weekStringEng[i];}
-                    }
+                    if(day===daynum[i])
+                    {break;}
                 }
-                document.getElementById('fulldate').innerHTML=year+"/"+mouth+"/"+date;
-                document.getElementById('week').innerHTML=weekout;
+                var dayFormat=document.getElementById('dayformat').value;
+                switch(dayFormat)
+                {
+                    case "Cht":
+                            document.getElementById('fulldate').innerHTML=year+"年"+mouth+"月"+date+"日 "+dayStringCht[i];break;
+                    case "Eng":
+                            document.getElementById('fulldate').innerHTML=dayStringEng[i]+". "+year+"/"+mouth+"/"+date;break;
+                }
                 },1000);
                 
             }
@@ -146,25 +214,88 @@
                         <span id='sec'></span>
                         <br/>
                         <span id='fulldate'></span>
-                        <span></span>
-                        <span id='week'></span>
                     </div>
                     <div id='datebox' class='datebox'>
-                        
+                        <table style="text-align:center;width:300px;">
+                            <tr>
+                                <td colspan="7"><span id="dateYear">2022</span>/<span id="datemonth">11</span></td>
+                            </tr>
+                            <tr>
+                                <td id="dayTitle1">日</td>
+                                <td id="dayTitle2">一</td>
+                                <td id="dayTitle3">二</td>
+                                <td id="dayTitle4">三</td>
+                                <td id="dayTitle5">四</td>
+                                <td id="dayTitle6">五</td>
+                                <td id="dayTitle7">六</td>
+                            </tr>
+                            <tr>
+                                <td>　</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>　</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>　</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>　</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>　</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>　</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
-                <br/>
-                <br/>
-                <br/>
                 <div id='controlPart'>
-                    <select id='theme' onchange="theme()">
-                        <option value='light'>白天模式</option>
-                        <option value='dark'>夜間模式</option>
+                    <select id='theme' onchange="theme()" style="text-align:center">
+                        <option value='light' selected disabled>---Theme---</option>
+                        <option value='light'>Light(日間模式)</option>
+                        <option value='dark'>Dark(夜間模式)</option>
                     </select>
-                    <select id='weekformat'>
-                        <option value='Cht' selected disabled>-設定星期格式-</option>
-                        <option value='Cht'>中文</option>
-                        <option value='Eng'>英文</option>
+                    <select id='dayformat' style="text-align:center" onchange="formatChange()">
+                        <option value='Cht' selected disabled>---Date Format---</option>
+                        <option value='Cht'>Chinese(中文)</option>
+                        <option value='Eng'>English(英文)</option>
                     </select>
                 </div>
             </div>            
