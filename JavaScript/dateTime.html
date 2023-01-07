@@ -10,81 +10,102 @@
                 margin: 0;
                 box-sizing: border-box;
             }
-
             body{
+                min-height: 100vh;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                min-height: 100vh;
             }
             .outbox{
                 position: relative;
                 background: black;
+                padding: 10px;
                 width: 750px;
-                height: 300px;
+                height: 320px;
                 border-radius: 10px;
                 overflow: hidden;
+                z-index: 0;
             }
             .outbox::before{
-                content: '';
                 position: absolute;
-                top: -8%;
-                left: -28%;
+                content: '';
+                top: -5%;
+                left: -30%;
                 width: 150px;
-                height: 350px;
+                height: 360px;
+                z-index: 1;
                 background: linear-gradient(90deg,transparent,#45f3ff,#45f3ff);
-                transform-origin: bottom right;
                 animation: animate 3s linear infinite;
             }
             .outbox::after{
-                content: '';
                 position: absolute;
-                top: -8%;
-                left: 109%;
+                content: '';
+                top: -5%;
+                left: 110%;
                 width: 150px;
-                height: 350px;
+                height: 360px;
                 background: linear-gradient(270deg,transparent,#45f3ff,#45f3ff);
-                transform-origin: bottom right;
                 animation: animate2 3s linear infinite;
             }
             @keyframes animate
             {
-                0%{left: -28%;}
-                100%{left: 109%;}
+                0%{left: -30%;}
+                100%{left: 110%;}
             }
             @keyframes animate2
             {
-                0%{left: 109%;}
-                100%{left: -28%;}
+                0%{left: 110%;}
+                100%{left: -30%;}
             }
             .inbox{
                 position: absolute;
-                inset: 8px;
                 border-radius: 10px;
                 background:white;
-                z-index: 10;
+                width: 730px;
+                height: 300px;
+                z-index: 100;
                 padding: 20px;
                 display: flex;
-                flex-direction: column;
                 overflow: hidden;
-            }
-            .datetime{
-                display: flex;
+                min-width: 420px;
             }
             .timebox{
-                width: 600px;
+                width: 400px;
+                height: 250px;
+            }
+            #controlPart{
+                width: 400px;
+                height: 60px;
+                display: flex;
+                align-items: end;
+            }
+            #controlPart select{
+                background: white;
+                color: black;
+                width: 130px;
+                height: 30px;
+                border-radius: 5px;
+                text-align: center;
             }
             .datebox{
-                display: flex;
-                justify-content: center;
-                width: 400px;
+                width: 420px;
+                height: 100%;
             }
             .datebox td{
-                border: 1px #000 double;
                 width: 14.285%;
+                height: 12.5%;
+                font-weight: bolder;
+            }
+            .datebox td[id *="-"]{
+                border: 1px black solid;
+            }
+            .datebox input{
+                border:none;
+                font-size:1.5rem;
+                background: transparent;
             }
             #time{
-                font-size: 90px;
+                font-size: 100px;
                 text-shadow:black 0px 0px 10px;
             }
             #sec{
@@ -95,17 +116,9 @@
                 font-size: 35px;
                 text-shadow:black 0px 0px 10px;
             }
-            #controlPart{
-                
-            }
-            select{
-                background: white;
-                color: black;
-                width: 130px;
-                height: 30px;
-            }
         </style>
         <script>
+            //主題更改
             function theme()
             {
                 var themeColor=document.getElementById('theme').value;
@@ -147,6 +160,7 @@
                     }
                 }
             }
+            //中英文切換
             function formatChange()
             {
                 const dayCht=['日','一','二','三','四','五','六'];
@@ -200,103 +214,186 @@
                             document.getElementById('fulldate').innerHTML=dayStringEng[i]+". "+year+"/"+mouth+"/"+date;break;
                 }
                 },1000);
-                
+                setInterval(function (){datenow();},600000);
+            }
+            //當天時間之月曆
+            function datenow()
+            {
+                const dateAll=new Date();
+                var year=dateAll.getFullYear();
+                var month=dateAll.getMonth()+1;
+                if(month<10)
+                {month="0"+month;};
+                document.getElementById('dateboxday').value=year+"-"+month;
+                tableOutput(year+"-"+month);
+            }
+            //自行輸入之月曆
+            function calendar()
+            {
+                var calendarIn=document.getElementById('dateboxday').value;
+                tableOutput(calendarIn);
+            }
+            //平or閏年判斷
+            function leapYearOrNot(year)
+            {
+                if(year%4===0)
+                {
+                    if(year%100===0)
+                    {
+                        if(year%400===0)
+                        {return true;}
+                        else
+                        {return false;}
+                    }
+                    else
+                    {return true;}
+                }else
+                {return false;}
+            }
+            //月曆輸出
+            function tableOutput(date)
+            {
+                //月曆條件處理
+                const dateIndex=[31,28,31,30,31,30,31,31,30,31,30,31];
+                var targetDate=new Date(date);
+                var day=targetDate.getDay();
+                var totalDay=dateIndex[targetDate.getMonth()];
+                //判斷二月天數
+                if(totalDay===28)
+                {
+                    var leapYear=leapYearOrNot(targetDate.getFullYear());
+                    if(leapYear)
+                    {totalDay=29;}
+                }
+                //輸出前清空月曆
+                for(var a=1;a<7;a++)
+                {
+                    for(var b=1;b<8;b++)
+                    {document.getElementById(a+"-"+b).innerHTML="　";}
+                }
+                //月曆輸出
+                var dayNumber=1;
+                for(var i=1;i<7;i++)
+                {
+                    if(i===1)
+                    {
+                        for(var k=1;k<8;k++)
+                        {
+                            if(k-1<day)
+                            {continue;}
+                            else
+                            {
+                                document.getElementById(i+"-"+k).innerHTML=dayNumber;
+                                dayNumber+=1;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for(var k=1;k<8;k++)
+                        {
+                            if(dayNumber>totalDay)
+                            {break;}
+                            document.getElementById(i+"-"+k).innerHTML=dayNumber;
+                            dayNumber+=1;
+                        }
+                    }
+                }
             }
         </script>
     </head>
-    <body id="body" onload="time()">
+    <body id="body" onload="time(),datenow()">
         <div id='outbox' class='outbox'>
             <div id='inbox' class='inbox'>
-                <div class="datetime">
-                    <div id='timebox' class='timebox'>
-                        <span id='time'>Loading...</span>
-                        <span></span>
+                <div class='timebox'>
+                    <div id='timebox' >
+                        <span id='time'>Loading..</span>
                         <span id='sec'></span>
                         <br/>
                         <span id='fulldate'></span>
                     </div>
-                    <div id='datebox' class='datebox'>
-                        <table style="text-align:center;width:300px;">
-                            <tr>
-                                <td colspan="7"><span id="dateYear">2022</span>/<span id="datemonth">11</span></td>
-                            </tr>
-                            <tr>
-                                <td id="dayTitle1">日</td>
-                                <td id="dayTitle2">一</td>
-                                <td id="dayTitle3">二</td>
-                                <td id="dayTitle4">三</td>
-                                <td id="dayTitle5">四</td>
-                                <td id="dayTitle6">五</td>
-                                <td id="dayTitle7">六</td>
-                            </tr>
-                            <tr>
-                                <td>　</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>　</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>　</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>　</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>　</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>　</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </table>
+                    <div id='controlPart'>
+                        <select id='theme' onchange="theme()">
+                            <option value='light' selected disabled>---Theme---</option>
+                            <option value='light'>Light(日間模式)</option>
+                            <option value='dark'>Dark(夜間模式)</option>
+                        </select>
+                        <select id='dayformat' onchange="formatChange()">
+                            <option value='Cht' selected disabled>---Date Format---</option>
+                            <option value='Cht'>Chinese(中文)</option>
+                            <option value='Eng'>English(英文)</option>
+                        </select>
                     </div>
                 </div>
-                <div id='controlPart'>
-                    <select id='theme' onchange="theme()" style="text-align:center">
-                        <option value='light' selected disabled>---Theme---</option>
-                        <option value='light'>Light(日間模式)</option>
-                        <option value='dark'>Dark(夜間模式)</option>
-                    </select>
-                    <select id='dayformat' style="text-align:center" onchange="formatChange()">
-                        <option value='Cht' selected disabled>---Date Format---</option>
-                        <option value='Cht'>Chinese(中文)</option>
-                        <option value='Eng'>English(英文)</option>
-                    </select>
+                <div id='datebox' class='datebox'>
+                    <table id='datetable' style="text-align:center;width:100%;height: 100%;border:2px blue dotted">
+                        <tr>
+                            <td colspan="7"><input type="month" id='dateboxday' value="" onchange='calendar()'/></td>
+                        </tr>
+                        <tr >
+                            <td id="dayTitle1" style='color:red;'>日</td>
+                            <td id="dayTitle2">一</td>
+                            <td id="dayTitle3">二</td>
+                            <td id="dayTitle4">三</td>
+                            <td id="dayTitle5">四</td>
+                            <td id="dayTitle6">五</td>
+                            <td id="dayTitle7" style='color:red;'>六</td>
+                        </tr>
+                        <tr>
+                            <td id="1-1">　</td>
+                            <td id="1-2"></td>
+                            <td id="1-3"></td>
+                            <td id="1-4"></td>
+                            <td id="1-5"></td>
+                            <td id="1-6"></td>
+                            <td id="1-7"></td>
+                        </tr>
+                        <tr>
+                            <td id="2-1">　</td>
+                            <td id="2-2"></td>
+                            <td id="2-3"></td>
+                            <td id="2-4"></td>
+                            <td id="2-5"></td>
+                            <td id="2-6"></td>
+                            <td id="2-7"></td>
+                        </tr>
+                        <tr>
+                            <td id="3-1">　</td>
+                            <td id="3-2"></td>
+                            <td id="3-3"></td>
+                            <td id="3-4"></td>
+                            <td id="3-5"></td>
+                            <td id="3-6"></td>
+                            <td id="3-7"></td>
+                        </tr>
+                        <tr>
+                            <td id="4-1">　</td>
+                            <td id="4-2"></td>
+                            <td id="4-3"></td>
+                            <td id="4-4"></td>
+                            <td id="4-5"></td>
+                            <td id="4-6"></td>
+                            <td id="4-7"></td>
+                        </tr>
+                        <tr>
+                            <td id="5-1">　</td>
+                            <td id="5-2"></td>
+                            <td id="5-3"></td>
+                            <td id="5-4"></td>
+                            <td id="5-5"></td>
+                            <td id="5-6"></td>
+                            <td id="5-7"></td>
+                        </tr>
+                        <tr>
+                            <td id="6-1">　</td>
+                            <td id="6-2"></td>
+                            <td id="6-3"></td>
+                            <td id="6-4"></td>
+                            <td id="6-5"></td>
+                            <td id="6-6"></td>
+                            <td id="6-7"></td>
+                        </tr>
+                    </table>
                 </div>
             </div>            
         </div>
