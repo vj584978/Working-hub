@@ -13,6 +13,8 @@
             body{
                 min-width: 800px;
                 min-height: 100vh;
+            }
+            .body{
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -304,6 +306,7 @@
         </script>
     </head>
     <body id="body" onload="time(),datenow()">
+        <div class="body">
         <div id='outbox' class='outbox'>
             <div id='inbox' class='inbox'>
                 <div class='timebox'>
@@ -398,6 +401,7 @@
                 </div>
             </div>
         </div>
-        <div style="width:700px;"><a href="index.html">回到上一頁</a></div>
+        </div>
+        <a href="index.html">回到上一頁</a>
     </body>
 </html>
