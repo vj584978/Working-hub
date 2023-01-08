@@ -11,15 +11,12 @@
                 box-sizing: border-box;
             }
             body{
-                min-width: 800px;
+                min-width: 100%;
                 min-height: 100vh;
-            }
-            .body{
-                width:100%;
-                height:100%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                overflow: scroll;
             }
             .outbox{
                 position: relative;
@@ -308,7 +305,7 @@
         </script>
     </head>
     <body id="body" onload="time(),datenow()">
-        <div class="body">
+        <div>
         <div id='outbox' class='outbox'>
             <div id='inbox' class='inbox'>
                 <div class='timebox'>
@@ -401,9 +398,10 @@
                         </tr>
                     </table>
                 </div>
-            </div>
+            </div>            
         </div>
+        <br/>
+        <a href="index.html">回到上一頁</a>
         </div>
-        <a href="index.html" align="center">回到上一頁</a>
     </body>
 </html>
