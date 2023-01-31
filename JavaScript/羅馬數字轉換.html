@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>羅馬數字轉換</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            table,td{
+                border: 1px black solid;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            const romaIndexS=["I","V","X","L","C","D","M","IV","IX","XL","XC","CD","CM"];
+            const romaIndexN=[1,5,10,50,100,500,1000,4,9,40,90,400,900];
+            //輸入校驗
+            function checkInput()
+            {
+                var check=0;
+                 var input=prompt("請輸入羅馬數字").toUpperCase();
+                 let inputSplit=input.split("");
+                 for(var i=0;i<inputSplit.length;i++)
+                 {
+                     for(var k=0;k<7;k++)
+                     {
+                         if(inputSplit[i]===romaIndexS[k])
+                         {
+                            check=0;
+                            break;
+                        }
+                         else
+                         {
+                             check=1;
+                             continue;
+                         }
+                     }
+                 }
+                 if(check===0)
+                 {romaCount(input,inputSplit);}
+                 else
+                 {alert("請輸入正確的羅馬數字");}
+            }
+            //輸入處裡計算
+            function romaCount(a,input)
+            {
+                let inputSplitDone=[];
+                let inputSplitDoneIndex=0;
+                let flag=99;
+                for(var i=0;i<input.length;i++)
+                {
+                    if(flag===i-1)
+                    {
+                        flag=99;
+                        continue;
+                    }
+                    for(var k=7;k<13;k++)
+                    {
+                        if(input[i]+input[i+1]===romaIndexS[k])
+                        {
+                            inputSplitDone[inputSplitDoneIndex]=input[i]+input[i+1];
+                            inputSplitDoneIndex++;
+                            flag=i;
+                            break;
+                        }
+                    }
+                    if(flag===i)
+                    {continue;}
+                    else
+                    {
+                        inputSplitDone[inputSplitDoneIndex]=input[i];
+                        inputSplitDoneIndex++;
+                        continue;
+                    }
+                }
+                let total=0;
+                for(var i=0;i<inputSplitDone.length;i++)
+                {
+                    for(var k=0;k<13;k++)
+                    {
+                        if(inputSplitDone[i]===romaIndexS[k])
+                        {
+                            total+=romaIndexN[k];
+                            break;
+                        }
+                    }
+                }
+                document.getElementById('out').innerHTML=`輸入的羅馬數字為： ${a}` +"<br/>"+ `阿拉伯數字為： ${total}`;
+                alert(`輸入的羅馬數字為： ${a}` +"\n"+ `阿拉伯數字為： ${total}`);
+            }
+            //第二種方案
+            function count2()
+            {
+                const romaIndex=new Map([["I",1],["V",5],["X",10],["L",50],["C",100],["D",500],["M",1000],["IV",4],["IX",9],["XL",40],["XC",90],["CD",400],["CM",900]]);
+                let input=prompt("請輸入羅馬數字").toUpperCase();
+                let inputSplit=input.split('');
+                let inputSplitDone=[];
+                let inputSplitDoneIndex=0;
+                let forctrl=0;
+                for(var i=0;i<inputSplit.length;i++)
+                {
+                    if(forctrl===1)
+                    {
+                        forctrl=0;
+                        continue;
+                    }else if(romaIndex.has(inputSplit[i]+inputSplit[i+1]))
+                    {
+                        inputSplitDone[inputSplitDoneIndex]=inputSplit[i]+inputSplit[i+1];
+                        inputSplitDoneIndex++;
+                        forctrl=1;
+                        continue;
+                    }
+                    else
+                    {
+                        inputSplitDone[inputSplitDoneIndex]=inputSplit[i];
+                        inputSplitDoneIndex++;
+                        continue;
+                    }
+                }
+                let total=0;
+                for(var j=0;j<inputSplitDone.length;j++)
+                {
+                    total+=romaIndex.get(inputSplitDone[j]);
+                }
+                    document.getElementById('out').innerHTML=`輸入的羅馬數字為： ${input}` +"<br/>"+ `阿拉伯數字為： ${total}`;
+                alert(`輸入的羅馬數字為： ${input}` +"\n"+ `阿拉伯數字為： ${total}`);
+            }
+            //第三種方案
+            function count3()
+            {
+                const romaIndex=[["I",1],["V",5],["X",10],["L",50],["C",100],["D",500],["M",1000],["IV",4],["IX",9],["XL",40],["XC",90],["CD",400],["CM",900]];
+                let input=prompt("請輸入羅馬數字").toUpperCase();
+                let inputSplit=input.split('');
+                let inputSplitdone=[];
+                let total=0;
+                for(var i=0;i<inputSplit.length;i++)
+                {
+                    for(var k=7;k<13;k++)
+                    {
+                        
+                    }
+                }
+            }
+        </script>
+        <input type="button" value="啟動!" onclick="checkInput()"/>
+        <input type="button" value="啟動2!" onclick="count2()"/>
+        <div id="out"></div>
+    </body>
+</html>

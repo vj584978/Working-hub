@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>8皇后隨機法求解</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            td{
+                width: 50px;
+                height: 50px;
+                border: 1px black solid;
+            }
+        </style>
+        <script>
+            let table;
+            function randomGen() {
+                    let time1=Date.now();
+                    let go = 1;
+                    while (go !== 0) {
+                            table = [
+                                    [0, 0, 0, 0, 0, 0, 0, 0],
+                                    [0, 0, 0, 0, 0, 0, 0, 0],
+                                    [0, 0, 0, 0, 0, 0, 0, 0],
+                                    [0, 0, 0, 0, 0, 0, 0, 0],
+                                    [0, 0, 0, 0, 0, 0, 0, 0],
+                                    [0, 0, 0, 0, 0, 0, 0, 0],
+                                    [0, 0, 0, 0, 0, 0, 0, 0],
+                                    [0, 0, 0, 0, 0, 0, 0, 0]
+                            ];
+                            let index = [0, 1, 2, 3, 4, 5, 6, 7];
+                            for (let i = 0; i < 8; i++) {
+                                    let random = Math.floor(Math.random() * index.length);
+                                    table[i][index[random]] = 1;
+                                    index.splice(random, 1);
+                            }
+                            console.log(table);
+                            go = check();
+                    }
+                    console.log("done");
+                    console.log(table);
+                    layout();
+                    let time2=Date.now();
+                    document.getElementById('speantime').innerHTML=`共花費 ${(time2-time1)/1000} 秒`;
+            }
+
+            function check() {
+                    let flag = 0;
+                    for (let x = 0; x < 8; x++) {
+                            if (flag === 1) {
+                                    break;
+                            }
+                            for (let y = 0; y < 8; y++) {
+                                    if (flag === 0) {
+                                            if (table[x][y] === 1) {
+                                                    flag = rayda(x, y);
+                                                    if (flag === 0) {
+                                                            console.log("第" + x + "行檢驗成功");
+                                                    } else {
+                                                            console.log("第" + x + "行檢驗失敗");
+                                                    }
+                                            } else {
+                                                    continue;
+                                            }
+                                    }
+                            }
+                    }
+                    return flag;
+            }
+
+            function rayda(x, y) {
+                    let state = 0;
+                    let yTemp;
+                    console.log("目標", x, y);
+                    //左上
+                    if (state === 0) {
+                            yTemp = y - 1;
+                            for (let a = x - 1; a > -1; a--) {
+                                    console.log(a, yTemp);
+                                    if (yTemp < 0) {
+                                            break;
+                                    }
+                                    if (table[a][yTemp] === 1) {
+                                            state = 1;
+                                    } else {
+                                            yTemp -= 1;
+                                    }
+                            }
+                    }
+                    //右上
+                    if (state === 0) {
+                            yTemp = y + 1;
+                            for (let a = x - 1; a > -1; a--) {
+                                    if (yTemp > 7) {
+                                            break;
+                                    }
+                                    if (table[a][yTemp] === 1) {
+                                            state = 1;
+                                    } else {
+                                            yTemp += 1;
+                                    }
+                            }
+                    }
+                    //右下
+                    if (state === 0) {
+                            yTemp = y - +1;
+                            for (let a = x + 1; a < 8; a++) {
+                                    if (yTemp > 7) {
+                                            break;
+                                    }
+                                    if (table[a][yTemp] === 1) {
+                                            state = 1;
+                                    } else {
+                                            yTemp += 1;
+                                    }
+                            }
+                    }
+                    //左下
+                    if (state === 0) {
+                            yTemp = y - 1;
+                            for (let a = x + 1; a < 8; a++) {
+                                    if (yTemp < 0) {
+                                            break;
+                                    }
+                                    if (table[a][yTemp] === 1) {
+                                            state = 1;
+                                    } else {
+                                            yTemp -= 1;
+                                    }
+                            }
+                    }
+                    return state;
+            }
+
+            function layout() {
+                    reset();
+                    for (var i = 0; i < 8; i++) {
+                            for (var k = 0; k < 8; k++) {
+                                    if (table[i][k] === 1) {
+                                            document.getElementById(i + "-" + k).style.background = "black";
+                                    }
+                            }
+                    }
+            }
+
+            function reset() {
+                    for (var i = 0; i < 8; i++) {
+                            for (var k = 0; k < 8; k++) {
+                                    document.getElementById(i + "-" + k).style.background = "white";
+                            }
+                    }
+            }
+        </script>
+    </head>
+    <body>
+    <center>
+        <h1>8皇后求隨機解</h1>
+        <table>
+            <tr>
+                <td id="0-0"> </td><td id="0-1"> </td><td id="0-2"> </td><td id="0-3"> </td><td id="0-4"> </td><td id="0-5"> </td><td id="0-6"> </td><td id="0-7"> </td>
+            </tr>
+            <tr>
+                <td id="1-0"> </td><td id="1-1"> </td><td id="1-2"> </td><td id="1-3"> </td><td id="1-4"> </td><td id="1-5"> </td><td id="1-6"> </td><td id="1-7"> </td>
+            </tr>
+            <tr>
+                <td id="2-0"> </td><td id="2-1"> </td><td id="2-2"> </td><td id="2-3"> </td><td id="2-4"> </td><td id="2-5"> </td><td id="2-6"> </td><td id="2-7"> </td>
+            </tr>
+            <tr>
+                <td id="3-0"> </td><td id="3-1"> </td><td id="3-2"> </td><td id="3-3"> </td><td id="3-4"> </td><td id="3-5"> </td><td id="3-6"> </td><td id="3-7"> </td>
+            </tr>
+            <tr>
+                <td id="4-0"> </td><td id="4-1"> </td><td id="4-2"> </td><td id="4-3"> </td><td id="4-4"> </td><td id="4-5"> </td><td id="4-6"> </td><td id="4-7"> </td>
+            </tr>
+            <tr>
+                <td id="5-0"> </td><td id="5-1"> </td><td id="5-2"> </td><td id="5-3"> </td><td id="5-4"> </td><td id="5-5"> </td><td id="5-6"> </td><td id="5-7"> </td>
+            </tr>
+            <tr>
+                <td id="6-0"> </td><td id="6-1"> </td><td id="6-2"> </td><td id="6-3"> </td><td id="6-4"> </td><td id="6-5"> </td><td id="6-6"> </td><td id="6-7"> </td>
+            </tr>
+            <tr>
+                <td id="7-0"> </td><td id="7-1"> </td><td id="7-2"> </td><td id="7-3"> </td><td id="7-4"> </td><td id="7-5"> </td><td id="7-6"> </td><td id="7-7"> </td>
+            </tr>
+            
+        </table>
+        <br/>
+        <input type="button" value="求解+20" onclick="randomGen()"/>
+        <input type="button" value="重設" onclick="reset()"/>
+        <br/>
+        <h4 id="speantime">　</h4>
+    </center>
+    </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>求1000內費式數列</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            function gogo()
+            {
+                const t0=performance.now();
+                var n1=0;
+                var n2=1;
+                var n3=0;
+                var out="";
+                for(var i=1;i<100;i++)
+                {
+                    if(n3>900)
+                    {break;}
+                    n1=n2;
+                    n2=n3;
+                    n3=n2+n1;
+                    out+=n3+",";
+                }
+                document.getElementById('out').innerHTML=out;
+                const t1=performance.now();
+                alert("執行時間："+(t1-t0)+"ms");
+            }
+            function gogo2()
+            {
+                var n1=0;
+                var n2=1;
+                var n3=0;
+                var out="";
+                for(var i=1;i<100;i++)
+                {
+                    if(n3>900)
+                    {break;}
+                    out+=(n1=n2)+(n2=n3)+",";
+                     n3=n2+n1;
+                }
+                document.getElementById('out').innerHTML=out;
+            }
+        </script>
+        <input type="button" value="粗乃玩" onclick="gogo()"/>
+        <input type="button" value="粗乃玩2" onclick="gogo2()"/>
+        <h1 id="out">預備備</h1>
+    </body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>OH IT'S TREESSSSS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            function squer()
+            {
+                var output="";
+                for(var i=0;i<5;i++)
+                {
+                    for(var k=0;k<5;k++)
+                    {
+                        output+="※";
+                    }
+                    output+="<br/>";
+                }
+                document.getElementById('output').innerHTML=output;
+            }
+            function triangle45()
+            {
+                var output="";
+                for(var i=0;i<5;i++)
+                {
+                    for(var k=0;k<=i;k++)
+                    {
+                        output+="※";
+                    }
+                    output+="<br/>";
+                }
+                document.getElementById('output').innerHTML=output;
+            }
+            function triangle60()
+            {
+                var n=0;
+                var output="";
+                for(var i=1;i<6;i++)
+                {
+                    for(var k=8-n;k>0;k--)
+                    {
+                        output+="&nbsp;";
+                        
+                    }
+                    for(var j=0;j<=i-1;j++)
+                    {
+                        output+="※";
+                    }
+                    n+=2;
+                    output+="<br/>";
+                }
+                document.getElementById('output').innerHTML=output;
+            }
+            //生成樹(一般的)
+            function tree0()
+            {
+                var n=0;
+                var output="";
+                for(var i=1;i<10;i++)
+                {
+                    for(var k=18-n;k>0;k--)
+                    {
+                        output+="&nbsp;";
+                    }
+                    for(var j=0;j<=i-1;j++)
+                    {
+                        output+="※";
+                    }
+                    n+=2;
+                    output+="<br/>";
+                }
+                document.getElementById('output').innerHTML=output;
+            }
+            //生成樹(高的)
+            function tree1()
+            {
+                var n=0;
+                var m=5;
+                var output="";
+                for(var i=1;i<11;i++)
+                {
+                    for(var k=18-n;k>0;k--)
+                    {
+                        output+="&nbsp;";
+                    }
+                    for(var j=0;j<6-m;j++)
+                    {
+                        output+="※";
+                    }
+                    if(i%2===0)
+                    {n+=2;m-=1;}
+                    output+="<br/>";
+                }
+                document.getElementById('output').innerHTML=output;
+            }
+            //生成樹(肥的)
+            function tree2()
+            {
+                var n=0;
+                var output="";
+                for(var i=1;i<10;i++)
+                {
+                    if(i%2===0)
+                    {continue;}
+                    for(var k=18-n;k>0;k--)
+                    {
+                        output+="&nbsp;&nbsp;";
+                    }
+                    for(var j=0;j<=i-1;j++)
+                    {
+                        output+="※";
+                    }
+                    n+=2;
+                    output+="<br/>";
+                }
+                document.getElementById('output').innerHTML=output;
+            }
+            //生成樹(分層的)
+            function tree3()
+            {
+                var n=0;
+                var m=5;
+                var output="";
+                for(var i=1;i<10;i++)
+                {
+                    if(i%6===0)
+                    {m=3;n=4;}
+                    for(var k=10-n;k>0;k--)
+                    {
+                        output+="&nbsp;";
+                    }
+                    for(var j=0;j<=5-m;j++)
+                    {
+                        output+="※";
+                    }
+                    n+=2;
+                    m-=1;
+                    output+="<br/>";
+                }
+                document.getElementById('output').innerHTML=output;
+            }
+            //生成樹(長腳的)
+            function tree4()
+            {
+                var n=0;
+                var m=5;
+                var output="";
+                for(var i=1;i<10;i++)
+                {
+                    if(i%6===0)
+                    {m=3;n=4;}
+                    for(var k=10-n;k>0;k--)
+                    {
+                        output+="&nbsp;";
+                    }
+                    for(var j=0;j<=5-m;j++)
+                    {
+                        output+="※";
+                    }
+                    n+=2;
+                    m-=1;
+                    output+="<br/>";
+                }
+                document.getElementById('output').innerHTML=output+"　　※※<br/>　　※※"; //我偷懶所以腳直接長了
+            }
+        </script>
+    </head>
+    <body>
+        <input type='button' value="生成正方形" onclick='squer()'/>
+        <input type='button' value="生成等腰三角形" onclick='triangle45()'/>
+        <input type='button' value="生成正三角形" onclick='triangle60()'/>
+        <input type='button' value="生成樹(一般的)" onclick='tree0()'/>
+        <input type='button' value="生成樹(高的)" onclick='tree1()'/>
+        <input type='button' value="生成樹(肥的)" onclick='tree2()'/>
+        <input type='button' value="生成樹(分層的)" onclick='tree3()'/>
+        <input type='button' value="生成樹(長腳的)" onclick='tree4()'/>
+        <h1 id='output'>
+            嘿嘿嘿
+        </h1>
+    </body>
+</html>
